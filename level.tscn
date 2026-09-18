@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://3t458ikrjv6o"]
+[gd_scene format=4 uid="uid://3t458ikrjv6o"]
 
 [ext_resource type="Texture2D" uid="uid://dqnal56y7ctvo" path="res://Asety/assets/TileSet TE.png" id="1_oi3di"]
 [ext_resource type="PackedScene" uid="uid://bc1dgknqcho1w" path="res://player.tscn" id="2_0b4ue"]
 [ext_resource type="PackedScene" uid="uid://2umh4kocx6h1" path="res://enemies.tscn" id="3_f2txt"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("1_oi3di")
 0:0/0 = 0
 1:0/0 = 0
@@ -15,19 +15,17 @@ texture = ExtResource("1_oi3di")
 7:0/0 = 0
 9:0/0 = 0
 5:2/0 = 0
+5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:2/0 = 0
 9:2/0 = 0
 11:2/0 = 0
 5:4/0 = 0
 7:4/0 = 0
 9:4/0 = 0
-3:3/0 = 0
-3:4/0 = 0
-3:2/0 = 0
-6:4/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_onrkg"]
-sources/0 = SubResource("TileSetAtlasSource_1ainy")
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_oi3di")
 
 [node name="Level" type="Node2D" unique_id=250922004]
 
@@ -36,6 +34,7 @@ sources/0 = SubResource("TileSetAtlasSource_1ainy")
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=824778714]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1051704478]
+tile_map_data = PackedByteArray("AAD9/wIAAQAFAAIAAAD+/wIAAQAFAAIAAAD//wIAAQAFAAIAAAAAAAIAAQAFAAIAAAABAAIAAQAFAAIAAAACAAIAAQAFAAIAAAADAAIAAQAFAAIAAAAEAAIAAQAFAAIAAAAFAAIAAQAFAAIAAAAGAAIAAQAFAAIAAAAHAAIAAQAFAAIAAAAIAAIAAQAFAAIAAAADAAEAAAABAAAAAAAEAAEAAAACAAAAAAAFAAEAAAAEAAAAAAAGAAEAAAAEAAAAAAA=")
 tile_set = SubResource("TileSet_onrkg")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=57902119]

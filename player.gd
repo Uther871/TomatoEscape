@@ -1,21 +1,30 @@
 extends CharacterBody2D
 
+# --- Рух ---
 @export var speed: float = 200.0
 @export var jump_velocity: float = -400.0
 @export var acceleration: float = 1500.0
 @export var friction: float = 1200.0
+
+# --- Розмір / "HP" ---
 @export var max_size: int = 5
 @export var speed_bonus_max: float = 150.0
 
+# --- Кочення ---
+@export var roll_radius: float = 16.0  # приблизний радіус томата в px, підбери під спрайт
+
 var current_size: int = max_size
 var base_scale: Vector2
+var was_on_floor: bool = true
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 func _ready() -> void:
 	add_to_group("player")
-	base_scale = scale
+	base_scale = sprite.scale
 
 
 func _physics_process(delta: float) -> void:
@@ -35,6 +44,34 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	_update_rolling(delta)
+	_check_landing()
+
+
+func _update_rolling(delta: float) -> void:
+	# Кутова швидкість = лінійна швидкість / радіус — фізично коректне кочення
+	if roll_radius > 0.0:
+		sprite.rotation += (velocity.x / roll_radius) * delta
+
+
+func _check_landing() -> void:
+	if is_on_floor() and not was_on_floor:
+		_play_landing_squash()
+	was_on_floor = is_on_floor()
+
+
+func _play_landing_squash() -> void:
+	var target_scale := base_scale_for_size()
+	var tween := create_tween()
+	sprite.scale = target_scale * Vector2(1.25, 0.75)
+	tween.tween_property(sprite, "scale", target_scale, 0.18) \
+		.set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+
+func base_scale_for_size() -> Vector2:
+	var size_ratio := float(current_size) / float(max_size)
+	return base_scale * size_ratio
+
 
 func get_current_speed() -> float:
 	var size_ratio := float(current_size) / float(max_size)
@@ -48,8 +85,7 @@ func take_damage() -> void:
 
 
 func update_visual_size() -> void:
-	var size_ratio := float(current_size) / float(max_size)
-	scale = base_scale * size_ratio
+	sprite.scale = base_scale_for_size()
 
 
 func heal(amount: int = 1) -> void:
