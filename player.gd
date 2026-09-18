@@ -2,9 +2,10 @@ extends CharacterBody2D
 
 # --- Рух ---
 @export var speed: float = 200.0
-@export var jump_velocity: float = -400.0
+@export var jump_velocity: float = -320.0        # було -400.0 — стрибок нижчий
 @export var acceleration: float = 1500.0
-@export var friction: float = 1200.0
+@export var rolling_friction: float = 250.0      # НОВЕ: слабке гальмування = інерція після відпуску
+@export var jump_cut_gravity_mult: float = 2.2   # НОВЕ: додаткова гравітація на злеті — коротший, "клацаючий" стрибок
 
 # --- Розмір / "HP" ---
 @export var max_size: int = 5
@@ -28,8 +29,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	_apply_gravity(delta)
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
@@ -38,9 +38,11 @@ func _physics_process(delta: float) -> void:
 	var current_speed := get_current_speed()
 
 	if input_dir != 0:
+		# під час утримання клавіші — звичайне керування прискоренням
 		velocity.x = move_toward(velocity.x, input_dir * current_speed, acceleration * delta)
 	else:
-		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+		# після відпуску — слабке гальмування, томат ще трохи котиться за інерцією
+		velocity.x = move_toward(velocity.x, 0.0, rolling_friction * delta)
 
 	move_and_slide()
 
@@ -48,8 +50,19 @@ func _physics_process(delta: float) -> void:
 	_check_landing()
 
 
+func _apply_gravity(delta: float) -> void:
+	if is_on_floor():
+		return
+
+	# на злеті (кнопка ще тримається, рух вгору) — звичайна гравітація,
+	# при падінні або відпущеній кнопці — посилена, щоб стрибок був коротшим і "клацав" одразу вниз
+	if velocity.y < 0.0 and Input.is_action_pressed("jump"):
+		velocity.y += gravity * delta
+	else:
+		velocity.y += gravity * jump_cut_gravity_mult * delta
+
+
 func _update_rolling(delta: float) -> void:
-	# Кутова швидкість = лінійна швидкість / радіус — фізично коректне кочення
 	if roll_radius > 0.0:
 		sprite.rotation += (velocity.x / roll_radius) * delta
 
