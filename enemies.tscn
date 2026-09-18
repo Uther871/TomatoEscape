@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://2umh4kocx6h1"]
+
+[ext_resource type="Script" uid="uid://bwtcs72wg6dwg" path="res://enemy.gd" id="1_gu34h"]
+[ext_resource type="PackedScene" uid="uid://dtgsvl3q3dj6h" path="res://projectile.tscn" id="2_g5tt5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsy63"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ov4ip"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtsop"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gu34h"]
+
+[node name="Enemies" type="Node2D" unique_id=1735700191]
+
+[node name="Enemy1" type="StaticBody2D" parent="." unique_id=1580087695]
+script = ExtResource("1_gu34h")
+projectile_scene = ExtResource("2_g5tt5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy1" unique_id=1749130489]
+
+[node name="DetectionArea" type="Area2D" parent="Enemy1" unique_id=328770870]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy1/DetectionArea" unique_id=99131858]
+shape = SubResource("RectangleShape2D_vsy63")
+
+[node name="ShootTimer" type="Timer" parent="Enemy1" unique_id=686490697]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy1" unique_id=5060506]
+shape = SubResource("RectangleShape2D_ov4ip")
+
+[node name="Enemy2" type="StaticBody2D" parent="." unique_id=1913679124]
+script = ExtResource("1_gu34h")
+projectile_scene = ExtResource("2_g5tt5")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy2" unique_id=1697234886]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2" unique_id=242397097]
+shape = SubResource("RectangleShape2D_qtsop")
+
+[node name="DetectionArea" type="Area2D" parent="Enemy2" unique_id=633356145]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2/DetectionArea" unique_id=1464437322]
+shape = SubResource("RectangleShape2D_gu34h")
+
+[node name="ShootTimer" type="Timer" parent="Enemy2" unique_id=814065101]
