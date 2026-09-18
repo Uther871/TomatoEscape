@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://3t458ikrjv6o"]
+
+[node name="Level" type="Node2D" unique_id=250922004]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=762124092]
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=824778714]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1051704478]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=57902119]
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=526645345]
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1915761557]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=525301801]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1253410230]
+
+[node name="Enemy1" type="StaticBody2D" parent="Enemies" unique_id=1489076747]
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemies/Enemy1" unique_id=1963610007]
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Enemy1" unique_id=1280581482]
+
+[node name="ShootTimer" type="Timer" parent="Enemies/Enemy1" unique_id=1393183535]
+
+[node name="Enemy2" type="Node2D" parent="Enemies" unique_id=232239888]
+
+[node name="DetectionArea" type="Area2D" parent="Enemies/Enemy2" unique_id=857982588]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/Enemy2/DetectionArea" unique_id=17935139]
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemies/Enemy2" unique_id=1997984087]
+
+[node name="CollisionShape2D2" type="Timer" parent="Enemies/Enemy2" unique_id=1282185523]
