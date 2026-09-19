@@ -3,6 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://dqnal56y7ctvo" path="res://Asety/assets/TileSet TE.png" id="1_oi3di"]
 [ext_resource type="PackedScene" uid="uid://bc1dgknqcho1w" path="res://player.tscn" id="2_0b4ue"]
 [ext_resource type="PackedScene" uid="uid://2umh4kocx6h1" path="res://enemies.tscn" id="3_f2txt"]
+[ext_resource type="PackedScene" path="res://exit_zone.tscn" id="4_exitzone"]
+[ext_resource type="Script" uid="uid://r2nqbxnwvrm" path="res://music_loop.gd" id="5_musicloop"]
+[ext_resource type="AudioStream" uid="uid://b0ebb0s0n78pr" path="res://Asety/music/Standalone/3_PerliousJourney_Standalone.wav" id="6_musictrack"]
+[ext_resource type="Script" uid="uid://cni5q24xtvch2" path="res://controls_hint.gd" id="7_hint"]
+[ext_resource type="Shader" uid="uid://1n15y6jt40dj" path="res://fisheye_noise.gdshader" id="8_fisheye"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oi3di"]
 texture = ExtResource("1_oi3di")
@@ -12,36 +17,99 @@ texture = ExtResource("1_oi3di")
 3:0/0 = 0
 4:0/0 = 0
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:0/0 = 0
+9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:2/0 = 0
 5:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:2/0 = 0
+7:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:2/0 = 0
+9:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:2/0 = 0
 5:4/0 = 0
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:4/0 = 0
+7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 9:4/0 = 0
+9:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_onrkg"]
 physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_oi3di")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fisheye"]
+shader = ExtResource("8_fisheye")
+shader_parameter/distortion_strength = 0.15
+shader_parameter/noise_strength = 0.06
+shader_parameter/vignette_strength = 0.35
+shader_parameter/noise_speed = 1.0
+
 [node name="Level" type="Node2D" unique_id=250922004]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=478410954]
+stream = ExtResource("6_musictrack")
+volume_db = -8.0
+autoplay = true
+script = ExtResource("5_musicloop")
+
+[node name="ControlsHint" type="CanvasLayer" parent="." unique_id=1735703192]
+script = ExtResource("7_hint")
+
+[node name="Label" type="Label" parent="ControlsHint" unique_id=675985474]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 20
+text = "A / D    —  MOVE
+SPACE    —  HOLD ON"
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=762124092]
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=824778714]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1051704478]
-tile_map_data = PackedByteArray("AAD9/wIAAQAFAAIAAAD+/wIAAQAFAAIAAAD//wIAAQAFAAIAAAAAAAIAAQAFAAIAAAABAAIAAQAFAAIAAAACAAIAAQAFAAIAAAADAAIAAQAFAAIAAAAEAAIAAQAFAAIAAAAFAAIAAQAFAAIAAAAGAAIAAQAFAAIAAAAHAAIAAQAFAAIAAAAIAAIAAQAFAAIAAAADAAEAAAABAAAAAAAEAAEAAAACAAAAAAAFAAEAAAAEAAAAAAAGAAEAAAAEAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAgAAQAHAAIAAAABAAgAAQAHAAIAAAACAAgAAQAHAAIAAAADAAgAAQAHAAIAAAAEAAgAAQAHAAIAAAAFAAgAAQAHAAIAAAAGAAgAAQAHAAIAAAAHAAgAAQAHAAIAAAAIAAgAAQAHAAIAAAAJAAgAAQAHAAIAAAAKAAgAAQAHAAIAAAALAAgAAQAHAAIAAAAMAAgAAQAHAAIAAAD//wAAAQAHAAIAAAD//wEAAQAHAAIAAAD//wIAAQAHAAIAAAD//wMAAQAHAAIAAAD//wQAAQAHAAIAAAD//wUAAQAHAAIAAAD//wYAAQAHAAIAAAD//wcAAQAHAAIAAAD//wgAAQAHAAIAAAAGAAUAAQAHAAIAAAAHAAUAAQAHAAIAAAAIAAUAAQAHAAIAAAAQAAgAAQAHAAIAAAARAAgAAQAHAAIAAAASAAgAAQAHAAIAAAATAAgAAQAHAAIAAAAUAAgAAQAHAAIAAAAVAAgAAQAHAAIAAAAWAAgAAQAHAAIAAAAXAAgAAQAHAAIAAAAYAAgAAQAHAAIAAAAZAAgAAQAHAAIAAAAaAAgAAQAHAAIAAAAbAAgAAQAHAAIAAAAcAAgAAQAHAAIAAAAdAAgAAQAHAAIAAAAeAAgAAQAHAAIAAAAUAAUAAQAHAAIAAAAVAAUAAQAHAAIAAAAWAAUAAQAHAAIAAAAfAAkAAQAHAAIAAAAgAAoAAQAHAAIAAAAhAAsAAQAHAAIAAAAiAAsAAQAHAAIAAAAjAAsAAQAHAAIAAAAkAAsAAQAHAAIAAAAlAAsAAQAHAAIAAAAmAAsAAQAHAAIAAAAnAAsAAQAHAAIAAAAoAAsAAQAHAAIAAAApAAsAAQAHAAIAAAAqAAsAAQAHAAIAAAArAAsAAQAHAAIAAAAsAAsAAQAHAAIAAAAiAAcAAQAHAAIAAAAjAAcAAQAHAAIAAAAkAAcAAQAHAAIAAAAlAAcAAQAHAAIAAAAmAAcAAQAHAAIAAAAnAAcAAQAHAAIAAAAoAAcAAQAHAAIAAAApAAcAAQAHAAIAAAAqAAcAAQAHAAIAAAArAAcAAQAHAAIAAAAsAAcAAQAHAAIAAAAtAAAAAQAHAAIAAAAtAAEAAQAHAAIAAAAtAAIAAQAHAAIAAAAtAAMAAQAHAAIAAAAtAAQAAQAHAAIAAAAtAAUAAQAHAAIAAAAtAAYAAQAHAAIAAAAtAAcAAQAHAAIAAAAtAAgAAQAHAAIAAAAtAAkAAQAHAAIAAAAtAAoAAQAHAAIAAAAtAAsAAQAHAAIAAAA=")
 tile_set = SubResource("TileSet_onrkg")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=57902119]
-
 [node name="Player" parent="." unique_id=1884940187 instance=ExtResource("2_0b4ue")]
+position = Vector2(24, 113)
+
+[node name="AnimatedSprite2D" parent="Player" index="1" unique_id=1683028690]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" parent="Player" index="2" unique_id=1217495783]
+scale = Vector2(1.5, 1.5)
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=57902119]
+zoom = Vector2(2.5, 2.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
 
 [node name="Enemies" parent="." unique_id=1735700191 instance=ExtResource("3_f2txt")]
+
+[node name="Enemy1" parent="Enemies" index="0" unique_id=1580087695]
+position = Vector2(280, 113)
+
+[node name="Enemy2" parent="Enemies" index="1" unique_id=372112180]
+position = Vector2(440, 113)
+
+[node name="ExitZone" parent="." unique_id=1115142153 instance=ExtResource("4_exitzone")]
+position = Vector2(712, 144)
+
+[node name="PostProcess" type="CanvasLayer" parent="." unique_id=133161060]
+layer = 100
+
+[node name="FisheyeNoise" type="ColorRect" parent="PostProcess" unique_id=477084341]
+material = SubResource("ShaderMaterial_fisheye")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
 
 [editable path="Player"]
 [editable path="Enemies"]

@@ -3,6 +3,11 @@
 [ext_resource type="Script" uid="uid://ch25a64xnonnk" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Shader" uid="uid://dre5lsap75ca4" path="res://Asety/assets/outline.gdshader" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://bve02gdqxy8js" path="res://Asety/assets/TOMATO_ESCAPE Sprite Shit.png" id="2_onrkg"]
+[ext_resource type="PackedScene" uid="uid://bmqxi5cl3y7su" path="res://collectible.tscn" id="3_collectible"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sa2ql"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pg2g7"]
 shader = ExtResource("2_i3pqv")
@@ -33,20 +38,42 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sweqy"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ov4ip"]
+particle_flag_disable_z = true
+direction = Vector3(0, 11, 0)
+spread = 180.0
+initial_velocity_min = 54.76
+initial_velocity_max = 397.62
+gravity = Vector3(0, 98, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=1884940187 groups=["player"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_4flbx")
+collectible_scene = ExtResource("3_collectible")
+
+[node name="LandingParticles" type="GPUParticles2D" parent="." unique_id=990529637]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_sa2ql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1683028690]
 texture_filter = 1
 material = SubResource("ShaderMaterial_pg2g7")
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_sa2ql")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1217495783]
-visible = false
 position = Vector2(0, 1)
-scale = Vector2(0.9, 0.9)
+scale = Vector2(0.6, 0.6)
 shape = SubResource("CircleShape2D_sweqy")
+
+[node name="HitParticles" type="GPUParticles2D" parent="." unique_id=1968378787]
+emitting = false
+amount = 6
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_ov4ip")

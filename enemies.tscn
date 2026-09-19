@@ -6,6 +6,8 @@
 [ext_resource type="Shader" uid="uid://dre5lsap75ca4" path="res://Asety/assets/outline.gdshader" id="3_e0nqx"]
 [ext_resource type="Texture2D" uid="uid://du1v8j0m1rbbt" path="res://Asety/assets/gun.png" id="4_e0nqx"]
 [ext_resource type="Texture2D" uid="uid://bl3ctj0uwcafk" path="res://Asety/assets/Hand of lisiy.png" id="5_ke61e"]
+[ext_resource type="Script" uid="uid://c00jsn2lkveb0" path="res://enemy_chaser.gd" id="7_ke61e"]
+[ext_resource type="Texture2D" uid="uid://c331ueyi7xr80" path="res://Asety/assets/lisiy.png" id="8_jwg6e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e0nqx"]
 shader = ExtResource("3_e0nqx")
@@ -13,8 +15,10 @@ shader_parameter/shadow_offset = Vector2(2, 2)
 shader_parameter/shadow_color = Color(0, 0, 0, 0.4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsy63"]
+size = Vector2(150, 100)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ov4ip"]
+size = Vector2(28, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jwg6e"]
 shader = ExtResource("3_e0nqx")
@@ -22,15 +26,19 @@ shader_parameter/shadow_offset = Vector2(1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 0.35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qtsop"]
+size = Vector2(28, 30)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gu34h"]
+size = Vector2(150, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_catch"]
+size = Vector2(34, 36)
 
 [node name="Enemies" type="Node2D" unique_id=1735700191]
 
 [node name="Enemy1" type="StaticBody2D" parent="." unique_id=1580087695]
 texture_filter = 1
 collision_layer = 4
-collision_mask = 0
 script = ExtResource("1_gu34h")
 projectile_scene = ExtResource("2_g5tt5")
 
@@ -44,6 +52,7 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy1/DetectionArea" unique_id=99131858]
+position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_vsy63")
 
 [node name="ShootTimer" type="Timer" parent="Enemy1" unique_id=686490697]
@@ -66,20 +75,19 @@ position = Vector2(-7, -8)
 
 [node name="HandSprite" type="Sprite2D" parent="Enemy1/GunPivot" unique_id=806657516]
 texture_filter = 1
-position = Vector2(-2, 5)
+position = Vector2(-1, 5)
 rotation = 0.7086037
 texture = ExtResource("5_ke61e")
 
-[node name="Enemy2" type="StaticBody2D" parent="." unique_id=1913679124]
+[node name="Enemy2" type="CharacterBody2D" parent="." unique_id=372112180]
 collision_layer = 4
-script = ExtResource("1_gu34h")
-projectile_scene = ExtResource("2_g5tt5")
+script = ExtResource("7_ke61e")
 
 [node name="BodySprite" type="Sprite2D" parent="Enemy2" unique_id=1697234886]
 z_index = 1
 texture_filter = 1
 material = SubResource("ShaderMaterial_jwg6e")
-texture = ExtResource("3_1v8mu")
+texture = ExtResource("8_jwg6e")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2" unique_id=242397097]
 shape = SubResource("RectangleShape2D_qtsop")
@@ -91,23 +99,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2/DetectionArea" unique_id=1464437322]
 shape = SubResource("RectangleShape2D_gu34h")
 
-[node name="ShootTimer" type="Timer" parent="Enemy2" unique_id=814065101]
+[node name="CatchArea" type="Area2D" parent="Enemy2" unique_id=1464437400]
+collision_layer = 16
+collision_mask = 2
 
-[node name="GunPivot" type="Node2D" parent="Enemy2" unique_id=1328676352]
-position = Vector2(-5, -7)
-
-[node name="GunSprite" type="Sprite2D" parent="Enemy2/GunPivot" unique_id=1734489728]
-z_index = 2
-texture_filter = 1
-position = Vector2(-7, 4)
-scale = Vector2(0.5625, 0.625)
-texture = ExtResource("4_e0nqx")
-
-[node name="Muzzle" type="Marker2D" parent="Enemy2/GunPivot" unique_id=1077284572]
-position = Vector2(0, 2)
-
-[node name="HandSprite" type="Sprite2D" parent="Enemy2/GunPivot" unique_id=456128659]
-texture_filter = 1
-position = Vector2(-2.0000005, 4)
-rotation = 0.7086037
-texture = ExtResource("5_ke61e")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2/CatchArea" unique_id=1464437401]
+shape = SubResource("RectangleShape2D_catch")

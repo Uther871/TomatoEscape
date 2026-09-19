@@ -13,6 +13,11 @@ config_version=5
 config/name="TomatoEscape"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+run/main_scene="res://level.tscn"
+
+[autoload]
+
+SFX="*res://sfx_player.gd"
 
 [display]
 
@@ -44,6 +49,7 @@ jump={
 2d_physics/layer_3="Enemies"
 2d_physics/layer_4="Projectiles"
 2d_physics/layer_5="EnemyDetection"
+2d_physics/layer_6="Collectibles"
 
 [physics]
 
@@ -52,3 +58,4 @@ jump={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+environment/defaults/default_clear_color=Color(0.56078434, 0.6392157, 0.6784314, 1)

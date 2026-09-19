@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://dtgsvl3q3dj6h"]
 
 [ext_resource type="Script" uid="uid://dpokpllqlqiml" path="res://projectile.gd" id="1_a85iw"]
+[ext_resource type="Texture2D" uid="uid://bkb3rfbgeqqia" path="res://Asety/assets/bullet_placeholder.png" id="2_bullet"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_glow"]
+blend_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sa2ql"]
+radius = 6.0
 
 [node name="Projectile" type="Area2D" unique_id=1425586449]
 collision_layer = 8
@@ -10,6 +15,15 @@ collision_mask = 3
 script = ExtResource("1_a85iw")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=709414720]
+texture_filter = 1
+texture = ExtResource("2_bullet")
+
+[node name="GlowSprite" type="Sprite2D" parent="." unique_id=1500000001]
+modulate = Color(1, 0.9, 0.4, 0.55)
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_glow")
+scale = Vector2(2.2, 2.2)
+texture = ExtResource("2_bullet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=150398769]
 shape = SubResource("CircleShape2D_sa2ql")
