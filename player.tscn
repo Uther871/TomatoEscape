@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bc1dgknqcho1w"]
+
+[ext_resource type="Script" uid="uid://ch25a64xnonnk" path="res://player.gd" id="1_4flbx"]
+[ext_resource type="Shader" uid="uid://dre5lsap75ca4" path="res://Asety/assets/outline.gdshader" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bve02gdqxy8js" path="res://Asety/assets/TOMATO_ESCAPE Sprite Shit.png" id="2_onrkg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pg2g7"]
+shader = ExtResource("2_i3pqv")
+shader_parameter/shadow_offset = Vector2(1, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("2_onrkg")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hqtel"]
+atlas = ExtResource("2_onrkg")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sa2ql"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3pqv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hqtel")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sweqy"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1884940187 groups=["player"]]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_4flbx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1683028690]
+texture_filter = 1
+material = SubResource("ShaderMaterial_pg2g7")
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_sa2ql")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1217495783]
+visible = false
+position = Vector2(0, 1)
+scale = Vector2(0.9, 0.9)
+shape = SubResource("CircleShape2D_sweqy")
