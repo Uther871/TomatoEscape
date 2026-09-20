@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		if body.has_method("take_damage"):
-			body.take_damage(direction)  
+			body.take_damage(direction)  # direction — вже існуюча змінна напрямку польоту
 		queue_free()
 	else:
 		queue_free()

@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://ckh1oleo6qgfq"]
+
+[ext_resource type="Script" uid="uid://bwtcs72wg6dwg" path="res://enemy.gd" id="1_wswjf"]
+[ext_resource type="PackedScene" uid="uid://dtgsvl3q3dj6h" path="res://projectile.tscn" id="2_sa1y5"]
+[ext_resource type="Shader" uid="uid://dre5lsap75ca4" path="res://Asety/assets/outline.gdshader" id="3_3u0vs"]
+[ext_resource type="Texture2D" uid="uid://b1ilykoq67lo7" path="res://Asety/assets/lisiy-2.png" id="4_q5scw"]
+[ext_resource type="Texture2D" uid="uid://du1v8j0m1rbbt" path="res://Asety/assets/gun.png" id="5_1piqj"]
+[ext_resource type="Texture2D" uid="uid://bl3ctj0uwcafk" path="res://Asety/assets/Hand of lisiy.png" id="6_jq6mw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0nqx"]
+shader = ExtResource("3_3u0vs")
+shader_parameter/shadow_offset = Vector2(2, 2)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsy63"]
+size = Vector2(982, 116)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ov4ip"]
+size = Vector2(28, 30)
+
+[node name="Enemy1" type="StaticBody2D" unique_id=1100015557]
+texture_filter = 1
+collision_layer = 4
+script = ExtResource("1_wswjf")
+projectile_scene = ExtResource("2_sa1y5")
+
+[node name="BodySprite" type="Sprite2D" parent="." unique_id=1838857235]
+z_index = 2
+material = SubResource("ShaderMaterial_e0nqx")
+texture = ExtResource("4_q5scw")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=595613062]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=194595346]
+position = Vector2(-3, 3)
+shape = SubResource("RectangleShape2D_vsy63")
+
+[node name="ShootTimer" type="Timer" parent="." unique_id=550939538]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=802820621]
+shape = SubResource("RectangleShape2D_ov4ip")
+
+[node name="GunPivot" type="Node2D" parent="." unique_id=1768074960]
+position = Vector2(-5, -8)
+
+[node name="GunSprite" type="Sprite2D" parent="GunPivot" unique_id=2104933297]
+z_index = 2
+texture_filter = 1
+position = Vector2(-7, 6)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("5_1piqj")
+
+[node name="Muzzle" type="Marker2D" parent="GunPivot" unique_id=272706105]
+position = Vector2(-7, -8)
+
+[node name="HandSprite" type="Sprite2D" parent="GunPivot" unique_id=17057593]
+texture_filter = 1
+position = Vector2(-1, 5)
+rotation = 0.7086037
+texture = ExtResource("6_jq6mw")

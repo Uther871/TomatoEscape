@@ -2,7 +2,8 @@ extends StaticBody2D
 
 @export var projectile_scene: PackedScene
 @export var gun_rotation_speed: float = 6.0
-@export var sprite_facing_offset: float = PI  
+@export var sprite_facing_offset: float = PI  # арт намальований "дивиться" вліво за замовчуванням
+
 @onready var gun_pivot: Node2D = $GunPivot
 @onready var gun_sprite: Sprite2D = $GunPivot/GunSprite
 @onready var hand_sprite: Sprite2D = $GunPivot/HandSprite
@@ -11,7 +12,7 @@ extends StaticBody2D
 @onready var shoot_timer: Timer = $ShootTimer
 
 var target: Node2D = null
-var current_aim_angle: float = 0.0  
+var current_aim_angle: float = 0.0  # справжній напрямок на гравця, для стрільби
 
 const ATTACK_SOUNDS := [
 	preload("res://Asety/music/SFX/Attack_01.wav"),
@@ -36,12 +37,20 @@ func _aim_at_target(delta: float) -> void:
 	var to_target := target.global_position - gun_pivot.global_position
 	current_aim_angle = to_target.angle()
 
-	var visual_angle := current_aim_angle + sprite_facing_offset
-	gun_pivot.rotation = lerp_angle(gun_pivot.rotation, visual_angle, gun_rotation_speed * delta)
+	# Дзеркалимо весь GunPivot (а не окремі спрайти flip_v), щоб рука і пістолет
+	# завжди лишались синхронізовані, і ніколи не оберталися "через верх" —
+	# саме це раніше й перевертало пістолет догори дриґом.
+	var facing_right: bool = cos(current_aim_angle) >= 0.0
+	var target_rotation: float
 
-	var facing_left: bool = abs(wrapf(current_aim_angle, -PI, PI)) > PI / 2.0
-	gun_sprite.flip_v = facing_left
-	hand_sprite.flip_v = facing_left
+	if facing_right:
+		gun_pivot.scale.x = -1.0
+		target_rotation = current_aim_angle
+	else:
+		gun_pivot.scale.x = 1.0
+		target_rotation = wrapf(current_aim_angle - sprite_facing_offset, -PI, PI)
+
+	gun_pivot.rotation = lerp_angle(gun_pivot.rotation, target_rotation, gun_rotation_speed * delta)
 
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
@@ -65,4 +74,4 @@ func _on_shoot_timer_timeout() -> void:
 	var projectile := projectile_scene.instantiate()
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = muzzle.global_position
-	projectile.set_direction(Vector2.RIGHT.rotated(current_aim_angle))  
+	projectile.set_direction(Vector2.RIGHT.rotated(current_aim_angle))  # реальний напрямок, не візуальний

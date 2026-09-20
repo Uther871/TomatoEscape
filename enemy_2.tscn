@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://cikh45hrm0xtd"]
+
+[ext_resource type="Script" uid="uid://c00jsn2lkveb0" path="res://enemy_chaser.gd" id="1_mvvu1"]
+[ext_resource type="Shader" uid="uid://dre5lsap75ca4" path="res://Asety/assets/outline.gdshader" id="2_hv4bk"]
+[ext_resource type="Texture2D" uid="uid://c331ueyi7xr80" path="res://Asety/assets/lisiy.png" id="3_qr8xe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwg6e"]
+shader = ExtResource("2_hv4bk")
+shader_parameter/shadow_offset = Vector2(1, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 0.35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qtsop"]
+size = Vector2(28, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gu34h"]
+size = Vector2(150, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_catch"]
+size = Vector2(34, 36)
+
+[node name="Enemy2" type="CharacterBody2D" unique_id=258580587]
+collision_layer = 4
+script = ExtResource("1_mvvu1")
+
+[node name="BodySprite" type="Sprite2D" parent="." unique_id=1944206657]
+z_index = 1
+texture_filter = 1
+material = SubResource("ShaderMaterial_jwg6e")
+texture = ExtResource("3_qr8xe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=280316363]
+shape = SubResource("RectangleShape2D_qtsop")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1079568946]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=380592555]
+shape = SubResource("RectangleShape2D_gu34h")
+
+[node name="CatchArea" type="Area2D" parent="." unique_id=810303757]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea" unique_id=1508623211]
+shape = SubResource("RectangleShape2D_catch")

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 90.0
+
 @onready var detection_area: Area2D = $DetectionArea
 @onready var catch_area: Area2D = $CatchArea
 

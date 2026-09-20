@@ -35,7 +35,7 @@ func _handle_win(player: Node2D) -> void:
 
 func _show_fallback_label() -> void:
 	var label := Label.new()
-	label.text = "ВТІК! 🍅"
+	label.text = "YOU WIN"
 	label.add_theme_font_size_override("font_size", 48)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER

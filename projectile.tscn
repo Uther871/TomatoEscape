@@ -16,19 +16,22 @@ script = ExtResource("1_a85iw")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=709414720]
 texture_filter = 1
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("2_bullet")
 
 [node name="GlowSprite" type="Sprite2D" parent="." unique_id=1500000001]
 modulate = Color(1, 0.9, 0.4, 0.55)
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_glow")
-scale = Vector2(2.2, 2.2)
+scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_bullet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=150398769]
+scale = Vector2(0.5, 0.5)
 shape = SubResource("CircleShape2D_sa2ql")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=880132944]
+scale = Vector2(0.8, 0.8)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bmqxi5cl3y7su"]
 
 [ext_resource type="Script" uid="uid://c00taoem7pbjl" path="res://collectible.gd" id="1_rd2yi"]
-[ext_resource type="Texture2D" path="res://Asety/assets/tomato_piece_placeholder.png" id="2_piece"]
+[ext_resource type="Texture2D" uid="uid://m3shjq04tmxc" path="res://Asety/assets/tomato_piece_placeholder.png" id="2_piece"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sa2ql"]
 radius = 5.0
@@ -12,7 +12,9 @@ collision_mask = 2
 script = ExtResource("1_rd2yi")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1330985305]
+texture_filter = 1
 texture = ExtResource("2_piece")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=180131084]
+texture_filter = 1
 shape = SubResource("CircleShape2D_sa2ql")

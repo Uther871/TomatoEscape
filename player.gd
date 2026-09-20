@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 200.0
-@export var jump_velocity: float = -220.0
+@export var jump_velocity: float = -300.0
 @export var acceleration: float = 1500.0
 @export var rolling_friction: float = 250.0
 @export var jump_cut_gravity_mult: float = 2.2
@@ -47,6 +47,7 @@ func _ready() -> void:
 	base_scale = sprite.scale
 	base_collision_scale = collision_shape.scale
 	spawn_position = global_position
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 
 func _physics_process(delta: float) -> void:
